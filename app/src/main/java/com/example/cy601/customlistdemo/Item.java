@@ -1,6 +1,8 @@
 package com.example.cy601.customlistdemo;
 
 public class Item {
+    String countryName;
+    int countryImg;
     public String getCountryName() {
         return countryName;
     }
@@ -17,6 +19,5 @@ public class Item {
         this.countryImg = countryImg;
     }
 
-    String countryName;
-    int countryImg;
+
 }
