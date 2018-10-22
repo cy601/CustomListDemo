@@ -1,6 +1,7 @@
 package com.example.cy601.customlistdemo;
 
 
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
+//https://blog.csdn.net/qq_27489007/article/details/52245923
 public class MainActivity extends AppCompatActivity {
-
-
+    //用来记录上次选中的项
+    private int mCurrentPosition;
     ListView listView;
     // ArrayList<Item> flagList = new ArrayList<>();
 
@@ -25,24 +28,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView = (ListView) findViewById(R.id.LV);
+        init();
+//listView.removeViewAt(index);
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("currentChoice",mCurrentPosition);
+    }
+
+    private void init() {
+        listView = (ListView) findViewById(R.id.LV);
         listView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                android.app.FragmentManager fragmentManger=getFragmentManager();
+                android.app.FragmentManager fragmentManger = getFragmentManager();
                 return false;
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                toShowDetails(position);
             }
         });
         MyBaseAdapter myAdapter = new MyBaseAdapter();
         listView.setAdapter(myAdapter);
-//listView.removeViewAt(index);
+    }
+
+
+    //用来显示点击图标后的画面
+    private void toShowDetails(int index) {
+        mCurrentPosition = index;
+
     }
 
 
